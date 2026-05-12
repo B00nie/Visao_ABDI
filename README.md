@@ -35,20 +35,35 @@ Pressione `ESC` para sair.
 - O `especialista.py` já faz a associação pessoa↔EPI usando IoU para verificar se cada pessoa está com capacete.
 - O filtro por confiança (`box.conf`) ajuda a reduzir falsos positivos.
 
-## Arquitetura da solução
-Câmera/Webcam
-↓
-Captura de frames
-↓
-Modelo YOLOv8
-↓
-Detecção de pessoas e EPIs
-↓
-Análise de risco
-↓
-Geração de alerta
-↓
-Dashboard/logs
+## 🏗️ Arquitetura da Solução
+
+```mermaid
+flowchart TD
+
+A[Câmera Industrial / Webcam] --> B[Captura de Vídeo em Tempo Real]
+
+B --> C[Processamento de Frames com OpenCV]
+
+C --> D[Modelo YOLOv8]
+
+D --> E[Detecção de Pessoas]
+
+D --> F[Detecção de EPIs]
+
+E --> G[Análise de Segurança]
+
+F --> G
+
+G --> H{Risco Detectado?}
+
+H -- Sim --> I[Alerta Sonoro e Visual]
+
+H -- Não --> J[Monitoramento Contínuo]
+
+I --> K[Dashboard / Logs]
+
+J --> K
+```
 
 ## Melhorias implementadas
 - Conversão BGR->RGB antes de chamar o modelo.
