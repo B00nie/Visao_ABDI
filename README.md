@@ -35,7 +35,7 @@ Pressione `ESC` para sair.
 - O `especialista.py` já faz a associação pessoa↔EPI usando IoU para verificar se cada pessoa está com capacete.
 - O filtro por confiança (`box.conf`) ajuda a reduzir falsos positivos.
 
-## 🏗️ Arquitetura da Solução
+## Arquitetura da Solução
 
 ```mermaid
 flowchart TD
