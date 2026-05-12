@@ -35,6 +35,21 @@ Pressione `ESC` para sair.
 - O `especialista.py` já faz a associação pessoa↔EPI usando IoU para verificar se cada pessoa está com capacete.
 - O filtro por confiança (`box.conf`) ajuda a reduzir falsos positivos.
 
+## Arquitetura da solução
+Câmera/Webcam
+↓
+Captura de frames
+↓
+Modelo YOLOv8
+↓
+Detecção de pessoas e EPIs
+↓
+Análise de risco
+↓
+Geração de alerta
+↓
+Dashboard/logs
+
 ## Melhorias implementadas
 - Conversão BGR->RGB antes de chamar o modelo.
 - Redimensionamento opcional via `--width` e `--height`.
