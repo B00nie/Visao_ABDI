@@ -1,6 +1,6 @@
-# Visão - Detecção de EPIs (versão 1)
+# Visão - Detecção de EPIs
 
-> Projeto simples para detecção de Equipamentos de Proteção Individual (EPIs) em vídeo usando YOLO (ultralytics) e OpenCV.
+> Projeto para detecção de Equipamentos de Proteção Individual (EPIs) em vídeo usando YOLO (ultralytics) e OpenCV, com conversão BGR->RGB e associação pessoa↔EPI por IoU.
 
 ## Estrutura
 - `detector.py` - wrapper do modelo YOLO para inferência sobre frames.
@@ -30,17 +30,20 @@ python main.py --model yolov8n.pt --camera 0 --conf 0.25 --width 640 --height 48
 Pressione `ESC` para sair.
 
 ## Notas importantes
-- O `detector.py` usa o pacote `ultralytics` (YOLOv8). Antes de usar, confirme que as classes esperadas existem no modelo (por exemplo, `helmet` pode não estar presente em modelos genéricos; você pode precisar adaptar o nome da classe ou treinar um modelo customizado).
-- O pipeline atual é intencionalmente simples:
-  - captura frame em BGR (OpenCV), passa direto para o modelo; recomenda-se converter para RGB e aplicar resize para melhorar desempenho.
-  - filtrar detecções por confiança (`box.conf`) pode reduzir falsos positivos.
-- `especialista.py` contém regras básicas. Para cenários reais, implemente associação pessoa↔EPI (tracking ou IoU por bbox) para avaliar se cada pessoa usa EPI.
+- O `detector.py` usa o pacote `ultralytics` (YOLOv8). Antes de usar, confirme que as classes esperadas existem no modelo; por exemplo, `helmet` pode não estar presente em modelos genéricos e pode exigir modelo customizado.
+- O pipeline atual já converte a imagem de BGR para RGB antes da inferência e permite redimensionamento opcional para melhorar o desempenho.
+- O `especialista.py` já faz a associação pessoa↔EPI usando IoU para verificar se cada pessoa está com capacete.
+- O filtro por confiança (`box.conf`) ajuda a reduzir falsos positivos.
 
-## Melhorias sugeridas (próximos passos)
-- O código atualizado já realiza conversão BGR→RGB, permite redimensionamento antes da inferência e filtra detecções por confiança.
-- `main.py` agora aceita argumentos: `--model`, `--camera`, `--conf`, `--width`, `--height`.
-- `especialista.py` aplica associação pessoa↔EPI via IoU para determinar se cada pessoa usa capacete.
-- Criar testes e adicionar `README` de instalação com instruções CUDA/cuDNN se usar GPU.
+## Melhorias implementadas
+- Conversão BGR->RGB antes de chamar o modelo.
+- Redimensionamento opcional via `--width` e `--height`.
+- Associação pessoa↔EPI por IoU para avaliação mais consistente.
+- Parâmetros de execução em `main.py`: `--model`, `--camera`, `--conf`, `--width`, `--height`.
+
+## Próximos passos
+- Criar testes automatizados para a lógica de associação por IoU.
+- Adicionar instruções de CUDA/cuDNN caso o projeto seja usado com GPU.
 
 ## Licença
 Projeto para fins educacionais — adapte conforme necessário.
